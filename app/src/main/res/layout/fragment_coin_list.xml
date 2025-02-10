@@ -7,15 +7,31 @@
     android:orientation="vertical"
     tools:context=".ui.coinlist.CoinListFragment">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/list_title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="8dp"/>
+        android:orientation="horizontal"
+        android:layout_margin="12dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/list_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:paddingBottom="8dp"/>
+
+        <ImageView
+            android:id="@+id/buttonProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_icon"
+            android:contentDescription="@string/app_name" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/etSearch"
