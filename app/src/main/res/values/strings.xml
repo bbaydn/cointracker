@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BitcoinTicker</string>
+    <string name="coin_icon">This is a coin icon</string>
+    <string name="coin_name">Coin Name</string>
+    <string name="coin_price">Coin Price</string>
+    <string name="description">Description</string>
+    <string name="search_hint">Search</string>
+    <string name="list_title">List of Coin</string>
+</resources>
