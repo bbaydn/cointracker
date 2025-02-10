@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "281533731136",
+    "project_id": "cointracker-43f4d",
+    "storage_bucket": "cointracker-43f4d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281533731136:android:6faac393962cea65072aa5",
+        "android_client_info": {
+          "package_name": "com.ba.bitcointicker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEtXpeQd6q8fI1EQ2IL9vVA-3AhI-kzZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

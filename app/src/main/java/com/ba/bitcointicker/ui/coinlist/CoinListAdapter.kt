@@ -1,14 +1,18 @@
 package com.ba.bitcointicker.ui.coinlist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ba.bitcointicker.data.model.Coin
 import com.ba.bitcointicker.databinding.ItemsViewBinding
 
-class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
+class CoinListAdapter(private val onItemClick: (String) -> Unit) :
+    RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
+
     private val coinList = mutableListOf<Coin>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(newList: List<Coin>) {
         coinList.clear()
         coinList.addAll(newList)
@@ -17,7 +21,7 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
         val binding = ItemsViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CoinViewHolder(binding)
+        return CoinViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
@@ -26,11 +30,18 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
 
     override fun getItemCount(): Int = coinList.size
 
-    class CoinViewHolder(private val binding: ItemsViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CoinViewHolder(
+        private val binding: ItemsViewBinding,
+        private val onItemClick: (String) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(coin: Coin) {
             binding.apply {
                 textViewCoinName.text = coin.name
                 textViewCoinPrice.text = "${coin.price}"
+                root.setOnClickListener {
+                    onItemClick(coin.id)
+                }
             }
         }
     }
