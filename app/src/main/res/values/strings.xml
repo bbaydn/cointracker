@@ -14,4 +14,5 @@
     <string name="welcome">Welcome</string>
     <string name="go_to_login">Go To Login</string>
     <string name="favorites_title">Favorites</string>
+    <string name="log_out">Log Out</string>
 </resources>
