@@ -13,7 +13,7 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class AuthState {
-        object Success : AuthState()
+        data object Success : AuthState()
         data class Error(val message: String) : AuthState()
     }
 
@@ -26,7 +26,7 @@ class AuthViewModel @Inject constructor(
                 if (task.isSuccessful) {
                     _authState.value = AuthState.Success
                 } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Giriş başarısız!")
+                    _authState.value = AuthState.Error(task.exception?.message ?: "Login Failed!")
                 }
             }
     }
@@ -37,7 +37,7 @@ class AuthViewModel @Inject constructor(
                 if (task.isSuccessful) {
                     _authState.value = AuthState.Success
                 } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Kayıt başarısız!")
+                    _authState.value = AuthState.Error(task.exception?.message ?: "Register failed!")
                 }
             }
     }

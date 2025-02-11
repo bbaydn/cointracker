@@ -37,7 +37,7 @@ class RegisterFragment : Fragment() {
             if (email.isNotEmpty() && password.length >= 6) {
                 viewModel.register(email, password)
             } else {
-                Toast.makeText(requireContext(), "E-posta ve şifreyi doğru girin!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error on e-post and/or password!", Toast.LENGTH_SHORT).show()
             }
         }
 
