@@ -1,10 +1,7 @@
 package com.ba.bitcointicker.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.ba.bitcointicker.data.model.Coin
 import com.ba.bitcointicker.data.model.CoinDetail
 import com.ba.bitcointicker.data.repository.CoinRepository
@@ -31,28 +28,23 @@ class CoinDetailViewModel @Inject constructor(
                 val detail = repository.getCoinDetail(coinId)
                 _coinDetail.value = detail
             } catch (e: Exception) {
-                println("API Hatası: ${e.message}")
+                println("API Error: ${e.message}")
             }
         }
     }
 
     fun addCoinToFavorites(coin: Coin, onSuccess: () -> Unit) {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        if (userId == null) {
-            Log.e("FirestoreError", "Kullanıcı giriş yapmamış!")
-            return
-        }
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val userFavoritesRef = firestore.collection("users").document(userId).collection("favorites")
 
         userFavoritesRef.document(coin.id).set(coin)
             .addOnSuccessListener {
-                println("Coin başarıyla favorilere eklendi!")
+                println("Coin added to favorites list successfully!")
                 onSuccess()
             }
             .addOnFailureListener { e ->
-                Log.e("FirestoreError", "Firestore'a veri yazılamadı: ${e.message}")
-                println("Hata: Favorilere eklenemedi. ${e.message}")
+                println("Error: Couldn't add to favorite list. ${e.message}")
             }
     }
 

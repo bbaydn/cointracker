@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.login(email, password)
             } else {
-                Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please fill all spaces!", Toast.LENGTH_SHORT).show()
             }
         }
 
