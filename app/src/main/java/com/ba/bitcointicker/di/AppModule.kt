@@ -3,6 +3,7 @@ package com.ba.bitcointicker.di
 import com.ba.bitcointicker.data.remote.CoinApiService
 import com.ba.bitcointicker.data.repository.CoinRepository
 import com.ba.bitcointicker.domain.usecase.GetCoinsUseCase
+import com.ba.bitcointicker.viewmodel.FavoritesViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -48,5 +49,10 @@ object AppModule {
     @Provides
     fun provideGetCoinsUseCase(repository: CoinRepository): GetCoinsUseCase {
         return GetCoinsUseCase(repository)
+    }
+
+    @Provides
+    fun provideFavoritesViewModel(firebase: FirebaseFirestore): FavoritesViewModel {
+        return FavoritesViewModel(firebase)
     }
 }

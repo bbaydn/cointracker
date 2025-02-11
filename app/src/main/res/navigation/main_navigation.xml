@@ -21,7 +21,11 @@
         android:id="@+id/coinDetailFragment"
         android:name="com.ba.bitcointicker.ui.coindetail.CoinDetailFragment"
         android:label="fragment_coin_detail"
-        tools:layout="@layout/fragment_coin_detail" />
+        tools:layout="@layout/fragment_coin_detail" >
+        <action
+            android:id="@+id/action_coinDetailFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ba.bitcointicker.ui.auth.LoginFragment"
@@ -51,4 +55,12 @@
         android:name="com.ba.bitcointicker.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.ba.bitcointicker.ui.profile.FavoritesFragment"
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+    </fragment>
 </navigation>

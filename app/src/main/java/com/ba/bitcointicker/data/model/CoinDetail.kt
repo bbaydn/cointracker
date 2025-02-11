@@ -35,3 +35,16 @@ data class MarketData(
     @SerializedName("price_change_percentage_24h") val priceChangePercentage24h: Double?
 
 )
+
+fun CoinDetail.toCoin(): Coin {
+    return Coin(
+        id = this.id,
+        name = this.name,
+        symbol = this.symbol,
+        price = this.price,
+        image = this.imageUrl
+    )
+}
+
+
+
