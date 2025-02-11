@@ -51,8 +51,4 @@ object AppModule {
         return GetCoinsUseCase(repository)
     }
 
-    @Provides
-    fun provideFavoritesViewModel(firebase: FirebaseFirestore): FavoritesViewModel {
-        return FavoritesViewModel(firebase)
-    }
 }
