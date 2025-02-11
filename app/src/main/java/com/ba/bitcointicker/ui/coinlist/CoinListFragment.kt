@@ -1,6 +1,8 @@
 package com.ba.bitcointicker.ui.coinlist
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ba.bitcointicker.R
+import com.ba.bitcointicker.data.model.Coin
 import com.ba.bitcointicker.databinding.FragmentCoinListBinding
 import com.ba.bitcointicker.viewmodel.CoinListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +25,8 @@ class CoinListFragment : Fragment() {
 
     private lateinit var binding: FragmentCoinListBinding
     private val viewModel: CoinListViewModel by viewModels()
+    private lateinit var adapter: CoinListAdapter
+    private var allCoins = listOf<Coin>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +39,7 @@ class CoinListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CoinListAdapter { coinId ->
+        adapter = CoinListAdapter { coinId ->
             findNavController().navigate(
                 R.id.action_coinListFragment_to_coinDetailFragment,
                 bundleOf("coin_id" to coinId)
@@ -51,8 +56,27 @@ class CoinListFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.filteredCoins.collect { coins ->
-                adapter.submitList(coins)
+                allCoins = coins
+                adapter.submitList(allCoins)
             }
         }
+
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                searchCoin(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+    }
+
+    private fun searchCoin(query: String) {
+        val filteredList = allCoins.filter { coin ->
+            coin.name.contains(query, ignoreCase = true) ||
+                    coin.symbol.contains(query, ignoreCase = true)
+        }
+        adapter.submitList(filteredList)
     }
 }
