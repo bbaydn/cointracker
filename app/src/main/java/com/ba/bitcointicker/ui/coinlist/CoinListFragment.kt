@@ -52,6 +52,10 @@ class CoinListFragment : Fragment() {
             etSearch.addTextChangedListener {
                 viewModel.searchCoin(it.toString())
             }
+            buttonProfile.setOnClickListener {
+                findNavController().navigate(R.id.action_coinListFragment_to_profileFragment)
+            }
+
         }
 
         lifecycleScope.launch {

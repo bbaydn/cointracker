@@ -42,4 +42,9 @@ class AuthViewModel @Inject constructor(
             }
     }
 
+    fun logOut(onSuccess: () -> Unit) {
+        auth.signOut()
+        onSuccess()
+    }
+
 }
