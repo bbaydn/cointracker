@@ -8,4 +8,10 @@
     <string name="list_title">List of Coin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="e_posta">e-post</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="welcome">Welcome</string>
+    <string name="go_to_login">Go To Login</string>
 </resources>
