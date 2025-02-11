@@ -1,12 +1,17 @@
 package com.ba.bitcointicker.ui.coindetail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.ba.bitcointicker.R
+import com.ba.bitcointicker.data.model.toCoin
 import com.ba.bitcointicker.databinding.FragmentCoinDetailBinding
 import com.ba.bitcointicker.viewmodel.CoinDetailViewModel
 import com.bumptech.glide.Glide
@@ -35,7 +40,12 @@ class CoinDetailFragment : Fragment() {
         viewModel.fetchCoinDetail(coinId)
 
         binding.btnAddFavorite.setOnClickListener {
-            viewModel.addCoinToFavorites(coinId)
+            val coin = viewModel.coinDetail.value?.toCoin()
+            if (coin != null) {
+                viewModel.addCoinToFavorites(coin) {
+                    findNavController().navigate(R.id.action_coinDetailFragment_to_favoritesFragment)
+                }
+            }
         }
 
         lifecycleScope.launch {
