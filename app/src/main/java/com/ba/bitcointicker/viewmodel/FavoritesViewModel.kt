@@ -14,25 +14,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val auth: FirebaseAuth
 ) : ViewModel() {
 
-    private val _favorites = MutableStateFlow<List<Coin>>(emptyList())
-    val favorites: StateFlow<List<Coin>> = _favorites
+    private val _favoriteCoins = MutableStateFlow<List<Coin>>(emptyList())
+    val favoriteCoins: StateFlow<List<Coin>> = _favoriteCoins
 
     fun fetchFavoriteCoins() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            println("FirebaseAuth: Kullanıcı giriş yapmamış!")
+            return
+        }
 
         firestore.collection("users")
             .document(userId)
             .collection("favorites")
             .get()
             .addOnSuccessListener { documents ->
-                val coins = documents.map { it.toObject(Coin::class.java) }
-                _favorites.value = coins
+                val coins = documents.mapNotNull { it.toObject(Coin::class.java) }
+                _favoriteCoins.value = coins
+                println("Favori coinler başarıyla çekildi: ${coins.size} adet")
             }
             .addOnFailureListener { e ->
-                Log.e("FirestoreError", "Favorileri çekerken hata oluştu: ${e.message}")
+                println("Favori coinler alınırken hata oluştu: ${e.message}")
             }
     }
 }

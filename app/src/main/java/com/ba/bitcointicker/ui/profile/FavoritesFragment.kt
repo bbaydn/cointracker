@@ -13,11 +13,15 @@ import com.ba.bitcointicker.R
 import com.ba.bitcointicker.databinding.FragmentFavoritesBinding
 import com.ba.bitcointicker.ui.coinlist.CoinListAdapter
 import com.ba.bitcointicker.viewmodel.FavoritesViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoritesBinding
+
     private val viewModel: FavoritesViewModel by viewModels()
 
     override fun onCreateView(
@@ -32,16 +36,17 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = CoinListAdapter { coinId ->
-            findNavController().navigate(R.id.action_favoritesFragment_to_coinDetailFragment)
+            val bundle = Bundle().apply { putString("coin_id", coinId) }
+            findNavController().navigate(R.id.action_favoritesFragment_to_coinDetailFragment, bundle)
         }
 
-        binding.apply {
-            rvFavorites.layoutManager = LinearLayoutManager(requireContext())
-            rvFavorites.adapter = adapter
+        binding.rvFavorites.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            this.adapter = adapter
         }
 
-        lifecycleScope.launch {
-            viewModel.favorites.collect { coins ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.favoriteCoins.collectLatest { coins ->
                 adapter.submitList(coins)
             }
         }
