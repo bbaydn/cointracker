@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ba.bitcointicker.R
 import com.ba.bitcointicker.data.model.Coin
 import com.ba.bitcointicker.databinding.ItemsViewBinding
+import com.bumptech.glide.Glide
 
 class CoinListAdapter(private val onItemClick: (String) -> Unit) :
     RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
@@ -37,11 +39,16 @@ class CoinListAdapter(private val onItemClick: (String) -> Unit) :
 
         fun bind(coin: Coin) {
             binding.apply {
-                textViewCoinName.text = coin.name
-                textViewCoinPrice.text = "${coin.price}"
+                tvCoinName.text = coin.name
+                tvCoinPrice.text = "${coin.price}"
                 root.setOnClickListener {
                     onItemClick(coin.id)
                 }
+                Glide.with(ivCoinIcon.context)
+                    .load(coin.image)
+                    .placeholder(R.drawable.money_icon)
+                    .error(R.drawable.money_icon)
+                    .into(ivCoinIcon)
             }
         }
     }
